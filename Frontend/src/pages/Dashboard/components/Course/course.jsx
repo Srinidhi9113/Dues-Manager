@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import FineCard from './finecard'
+import React,{useState, useEffect} from 'react'
+import FeeCard from './feecard'
 import Modal from '../paymentModal'
 
-export default function Library() {
-  const [fines,setFines] = useState([])
+export default function Hostel() {
+  const [fees,setFees] = useState([])
   const [modal,setModal] = useState(-1)
   const [txnID,setTxn] = useState("")
   const [amt,setAmt] = useState("")
@@ -15,13 +15,13 @@ export default function Library() {
     setAmt(event.target.value)
   }
   const handleSubmit = (event)=>{
-    if(txnID!=="" && amt!=="" && parseInt(amt)<=fines[modal]["pending"]){
+    if(txnID!=="" && amt!=="" && parseInt(amt)<=fees[modal]["pending"]){
       // send request to our server
 
-      const tempFees = fines
+      const tempFees = fees
       tempFees[modal]["pending"] -= parseInt(amt)
       if(tempFees[modal]["pending"]==0) tempFees.splice(modal,1)
-      setFines(tempFees)
+      setFees(tempFees)
 
 
       setTxn("")
@@ -42,29 +42,15 @@ export default function Library() {
     setModal(-1)
   }
   useEffect(()=>{
-    // fetch("http://localhost:8000/student/Library/"+"PES1UG21CS622")
-    // .then((data)=>data.json())
-    // .then((data)=>setFines(data))
-    setFines([
-    {
-      libID:"PESLIBCS234",
-      libName:"PES Library - 1",
-      bookID:"BOOK001",
-      bookName:"Modern Physics",
-      fine:100,
-      pending:50,
-      dueDate:(new Date()).toLocaleDateString('en-GB')
-    },
-    {
-      libID:"PESLIBCS234",
-      libName:"PES Library - 1",
-      bookID:"BOOK001",
-      bookName:"Modern Physics",
-      fine:100,
-      pending:50,
-      dueDate:(new Date()).toLocaleDateString('en-GB')
-    }
-  ])
+    setFees([
+        {
+            course_id:"PESUG21CS",
+            course_name:"Computer Science",
+            fee:100,
+            pending:50,
+            dueDate:(new Date()).toLocaleDateString('en-GB')
+        }
+    ])
   },[])
   return (
     <div className='w-full relative'>
@@ -72,20 +58,20 @@ export default function Library() {
         modal!==-1 && 
         <Modal handleExit={handleExit} handleSubmit={handleSubmit} txnError={txnError} enterTransaction={enterTransaction} enterAmt={enterAmt}/>
       }
-      {fines.length===0 && 
+      {fees.length===0 && 
         <div className='m-3 rounded-lg bg-white px-5 py-10 h-fit text-lg'>
-          No Fines to Show...
+          No Fees Pending
         </div>
       }
 
       {
-        fines.length!==0 &&
-        fines.map((fine,index)=>{
+        fees.length!==0 &&
+        fees.map((fee,index)=>{
           return <div className='hover:cursor-pointer'
           style={{
             filter:modal===-1?'none':'blur(1px)'
           }} onClick={()=>setModal(index)} key={index}>
-            <FineCard fine={fine}/>
+            <FeeCard fee={fee}/>
             </div>
         })
         

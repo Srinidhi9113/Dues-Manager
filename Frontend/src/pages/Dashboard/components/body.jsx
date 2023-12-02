@@ -4,9 +4,9 @@ import CourseActive from '../../../assets/computer-active.svg'
 import Home from './home'
 import Library from './Library/library'
 import Laboratory from './Laboratory/laboratory'
-import Hostel from './hostel'
-import Mess from './mess'
-import Course from './course'
+import Hostel from './Hostel/hostel'
+import Mess from './Mess/mess'
+import Course from './Course/course'
 
 export default function Body() {
     const [tab,setTab] = useState("Home")

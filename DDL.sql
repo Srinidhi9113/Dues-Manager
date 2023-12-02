@@ -17,7 +17,6 @@ book_id varchar(10),
 book_name varchar(20),
 author char(20),
 publication char(20),
-edition char(5),
 primary key(library_id,book_id)
 );
 
@@ -28,17 +27,17 @@ equip_name varchar(20),
 primary key(lab_id,equip_id)
 );
 
+CREATE TABLE Hostel(
+hostel_id varchar(13),
+hostel_name varchar(10),
+room_id int,
+primary key(hostel_id)
+);
+
 CREATE TABLE Mess(
 mess_id varchar(13),
 mess_name varchar(20),
 primary key(mess_id)
-);
-
-CREATE TABLE Hostel(
-hostel_id varchar(13),
-hostel_name varchar(10),
-num_rooms int,
-primary key(hostel_id)
 );
 
 CREATE TABLE Course(
@@ -86,10 +85,11 @@ CREATE TABLE Due_Mess (
 CREATE TABLE Due_Hostel (
     student_id VARCHAR(13),
     hostel_id VARCHAR(13),
+    room_id INT,
     fee INT,
     pending INT,
     due_date DATE,
-    PRIMARY KEY (student_id, hostel_id),
+    PRIMARY KEY (student_id, hostel_id,room_id),
     FOREIGN KEY (student_id) REFERENCES Student(student_id),
     FOREIGN KEY (hostel_id) REFERENCES Hostel(hostel_id)
 );

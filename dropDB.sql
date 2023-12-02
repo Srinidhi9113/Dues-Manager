@@ -1,4 +1,4 @@
-USE My_University;
+USE My_University; 
 
 DROP TABLE Student;
 DROP TABLE Library;

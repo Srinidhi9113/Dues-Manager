@@ -28,3 +28,28 @@ def InsertUser(data):
         mycursor.close()
         return False
     
+
+def GetDuesFromDB(student_id,infra):
+    mydb = mysql.connector.connect(
+        host=host,
+        user=user,
+        password=password,
+        database=database
+    )
+    if(infra=="Library"):
+        query = "CALL GetDueLibraryInfo(%s)"
+
+    mycursor = mydb.cursor()
+    try:
+        mycursor.execute(query,(student_id,))
+        myResult = mycursor.fetchall()
+        print(myResult)
+        mycursor.close()
+        return myResult
+    except mysql.connector.Error as err:
+        mydb.commit()
+        mycursor.close()
+        print(err)
+        return False
+        
+    
